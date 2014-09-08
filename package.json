@@ -1,0 +1,29 @@
+{
+  "name": "play-sound",
+  "version": "0.0.0",
+  "description": "Play audio files by shelling out to available audio tool.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shime/play-sound.git"
+  },
+  "keywords": [
+    "audio",
+    "sound",
+    "play"
+  ],
+  "author": "Hrvoje Simic <shime.ferovac@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shime/play-sound/issues"
+  },
+  "homepage": "https://github.com/shime/play-sound",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3"
+  }
+}
