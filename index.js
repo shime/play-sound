@@ -21,7 +21,7 @@ function Play(opts){
 
   this.play = function(what){
     if (!what) return;
-    if (!fs.existsSync(what)) this.emit('error', new Error("Couldn't find file: " + what))
+    if (!fs.existsSync(what)) this.emit('error', new Error("File doesn't exist: " + what))
 
     var players = this.players,
         self    = this

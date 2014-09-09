@@ -52,7 +52,7 @@ describe('error handling', function(){
 
   it("throws errors if the file doesn't exist", function(){
     expect(function(args) { cli.play(args) }).withArgs("beep.mp3").
-      to.throwException(/Couldn't find file: beep.mp3/)
+      to.throwException(/File doesn't exist: beep.mp3/)
   })
 
   it("throws errors if suitable audio tool couldn't be found", function(){
