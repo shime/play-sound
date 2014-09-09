@@ -2,7 +2,6 @@ var expect = require('expect.js')
   , sinon  = require('sinon')
   , mock   = require('mock-fs')
 
-
 describe('cvlc has the maximum priority', function(){
   var command, spy, cli
 
@@ -35,7 +34,7 @@ describe('cvlc has the maximum priority', function(){
     spy.withArgs("cvlc beep.mp3").callsArgWith(1, "cvlc: command not found")
 
     cli.play("beep.mp3")
-    expect(cli.player).to.be("mplayer")
+    expect(cli.player).to.be("afplay")
   })
 
   after(function(){
