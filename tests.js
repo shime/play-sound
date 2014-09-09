@@ -4,12 +4,12 @@ var expect = require('expect.js')
 
 
 describe('cvlc has the maximum priority', function(){
-  var command, spy, cli;
+  var command, spy, cli
 
   beforeEach(function(){
     command = "cvlc beep.mp3"
-    , spy     = sinon.stub()
-    , cli = require('./')({ child_process: { exec: spy }})
+    , spy   = sinon.stub()
+    , cli   = require('./')({ child_process: { exec: spy }})
 
     mock({'./beep.mp3': ''})
   })
@@ -44,14 +44,29 @@ describe('cvlc has the maximum priority', function(){
 })
 
 describe('error handling', function(){
-  it("throws errors if the file doesn't exist", function(){
-    var stub = sinon.stub()
-      , cli  = require('./')({ child_process: {exec: stub}})
+  var spy, cli
 
-    expect(cli.play).withArgs("beep.mp3").to.throwException()
+  before(function(){
+    spy   = sinon.stub()
+    , cli = require('./')({ child_process: { exec: spy }})
   })
 
-  it("throws errors if suitable audio tool couldn't be found")
+  it("throws errors if the file doesn't exist", function(){
+    expect(function(args) { cli.play(args) }).withArgs("beep.mp3").
+      to.throwException(/Couldn't find file: beep.mp3/)
+  })
+
+  it("throws errors if suitable audio tool couldn't be found", function(){
+    mock({'./beep.mp3': ''})
+    spy.callsArgWith(1, "command not found")
+
+    expect(function (args) { cli.play(args) }).withArgs("beep.mp3").
+      to.throwException(/Couldn't find a suitable audio player/)
+  })
+
+  after(function(){
+    mock.restore()
+  })
 })
 
 describe("overridable options", function(){

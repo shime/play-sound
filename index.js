@@ -3,9 +3,9 @@ var fs               = require('fs')
 function Play(opts){
   var opts = opts || {}
 
-  this.players = opts.players || ["cvlc", "mplayer"]
+  this.players       = opts.players || ["cvlc", "mplayer"]
   this.child_process = opts.child_process || child_process
-  this.player = opts.player
+  this.player        = opts.player
 
   var exec       = this.child_process.exec
 
@@ -20,7 +20,8 @@ function Play(opts){
       var player         = players[i]
 
       exec(player + " " + what, function(err, stdout, stderr){
-        if (err && i == (players.length - 1)) throw err
+        if (err && i == (players.length - 1))
+          throw new Error("Couldn't find a suitable audio player")
 
         if (!err){
           self.player = player
