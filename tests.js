@@ -37,7 +37,7 @@ describe('cvlc has the maximum priority', function(){
     expect(cli.player).to.be("afplay")
   })
 
-  after(function(){
+  afterEach(function(){
     mock.restore()
   })
 })
@@ -57,13 +57,24 @@ describe('error handling', function(){
 
   it("throws errors if suitable audio tool couldn't be found", function(){
     mock({'./beep.mp3': ''})
+
     spy.callsArgWith(1, "command not found")
 
     expect(function (args) { cli.play(args) }).withArgs("beep.mp3").
       to.throwException(/Couldn't find a suitable audio player/)
   })
 
-  after(function(){
+  it("emits errors", function(){
+    var spy = sinon.stub()
+      , cli = require('./')({ child_process: {exec: sinon.spy()}})
+    cli.on("error", spy)
+
+    cli.play("beep.mp3")
+
+    expect(spy.calledOnce).to.be(true)
+  })
+
+  afterEach(function(){
     mock.restore()
   })
 })

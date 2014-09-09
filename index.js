@@ -1,4 +1,6 @@
 var fs               = require('fs')
+  , util             = require('util')
+  , EventEmitter     = require('events').EventEmitter
   , defaultPlayers   = [
                         'cvlc',
                         'afplay',
@@ -19,7 +21,7 @@ function Play(opts){
 
   this.play = function(what){
     if (!what) return;
-    if (!fs.existsSync(what)) throw new Error("Couldn't find file: " + what)
+    if (!fs.existsSync(what)) this.emit('error', new Error("Couldn't find file: " + what))
 
     var players = this.players,
         self    = this
@@ -29,7 +31,7 @@ function Play(opts){
 
       exec(player + ' ' + what, function(err, stdout, stderr){
         if (err && i == (players.length - 1))
-          throw new Error("Couldn't find a suitable audio player")
+          self.emit("error", new Error("Couldn't find a suitable audio player"))
 
         if (!err){
           self.player = player
@@ -40,6 +42,8 @@ function Play(opts){
     }
   }
 }
+
+util.inherits(Play, EventEmitter)
 
 module.exports = function(opts){
   return new Play(opts)
