@@ -1,7 +1,31 @@
 function Play(opts){
-  this.child_process = opts.child_process
+  var opts = opts || {}
+
+  this.players = opts.players || ["cvlc", "mplayer"]
+  this.child_process = opts.child_process || child_process
+  this.player = opts.player
+
+  var exec       = this.child_process.exec
+
   this.play = function(what){
-    if (what) this.child_process.exec('cvlc ' + what)
+    if (!what) return;
+
+    var players = this.players,
+        self    = this
+
+    for(i = 0; i < players.length; i++){
+      var player         = players[i]
+
+      exec(player + " " + what, function(err, stdout, stderr){
+        if (err && i == (players.length - 1)) throw err
+
+        if (!err){
+          self.player = player
+        }
+      })
+
+      if (self.player) break
+    }
   }
 }
 module.exports = function(opts){
