@@ -1,3 +1,5 @@
+var fs               = require('fs')
+
 function Play(opts){
   var opts = opts || {}
 
@@ -9,6 +11,7 @@ function Play(opts){
 
   this.play = function(what){
     if (!what) return;
+    if (!fs.existsSync(what)) throw new Error("Couldn't find file: " + what)
 
     var players = this.players,
         self    = this
