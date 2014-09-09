@@ -70,7 +70,30 @@ describe('error handling', function(){
 })
 
 describe("overridable options", function(){
-  it("supports overrides for the list of players")
-  it("supports override for child_process")
-  it("supports override for player")
+  it("supports overrides for the list of players", function(){
+    var cli = require('./')({players: ["foo", "bar"], child_process: {}})
+    expect(cli.players).to.eql(["foo", "bar"])
+  })
+
+  it("supports override for child_process", function(){
+    var child_process = {}
+    var cli = require('./')({child_process: child_process})
+    expect(cli.child_process).to.eql(child_process)
+  })
+
+  it("supports override for player", function(){
+    var cli = require('./')({player: "foo", child_process: {}})
+    expect(cli.player).to.eql("foo")
+  })
+
+  it("player has precedence over players", function(){
+    var spy = sinon.stub()
+      , cli = require('./')({ child_process: { exec: spy }, player: "foo"})
+    mock({"beep.mp3": ""})
+
+    cli.play("beep.mp3")
+
+    expect(spy.calledOnce).to.be(true)
+    expect(spy.calledWith("foo beep.mp3")).to.be(true)
+  })
 })

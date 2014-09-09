@@ -1,13 +1,13 @@
 var fs               = require('fs')
 
 function Play(opts){
-  var opts = opts || {}
+  var opts           = opts || {}
 
   this.players       = opts.players || ["cvlc", "mplayer"]
   this.child_process = opts.child_process || child_process
   this.player        = opts.player
 
-  var exec       = this.child_process.exec
+  var exec           = this.child_process.exec
 
   this.play = function(what){
     if (!what) return;
@@ -17,7 +17,7 @@ function Play(opts){
         self    = this
 
     for(i = 0; i < players.length; i++){
-      var player         = players[i]
+      var player         = self.player || players[i]
 
       exec(player + " " + what, function(err, stdout, stderr){
         if (err && i == (players.length - 1))
@@ -32,6 +32,7 @@ function Play(opts){
     }
   }
 }
+
 module.exports = function(opts){
   return new Play(opts)
 }
