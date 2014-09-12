@@ -1,26 +1,26 @@
 var expect = require('expect.js')
   , sinon  = require('sinon')
-  , mock   = require('mock-fs')
+  , mock       = require('mock-fs')
 
-describe('cvlc has the maximum priority', function(){
+describe('mplayer has the maximum priority', function(){
   var command, spy, cli
 
   beforeEach(function(){
-    command = "cvlc beep.mp3"
+    command = "mplayer beep.mp3"
     , spy   = sinon.stub()
     , cli   = require('./')({ child_process: { exec: spy }})
 
     mock({'./beep.mp3': ''})
   })
 
-  it('tries to play with cvlc first', function(){
+  it('tries to play with mplayer first', function(){
     spy.callsArg(1)
 
     cli.play("beep.mp3")
 
     expect(spy.calledOnce).to.be(true)
     expect(spy.calledWith(command)).to.be(true)
-    expect(cli.player).to.be('cvlc')
+    expect(cli.player).to.be('mplayer')
   })
 
   it("doesn't try to play anything if nothing is passed", function(){
@@ -29,28 +29,16 @@ describe('cvlc has the maximum priority', function(){
     expect(spy.called).to.not.be(true)
   })
 
-  it("fallbacks to other players if it's not available", function(){
-    spy.callsArg(1)
-    spy.withArgs("cvlc beep.mp3").callsArgWith(1, "cvlc: command not found")
-
-    cli.play("beep.mp3")
-    expect(cli.player).to.be("afplay")
-  })
-
   afterEach(function(){
     mock.restore()
   })
 })
 
 describe('error handling', function(){
-  var spy, cli
-
-  before(function(){
-    spy   = sinon.stub()
-    , cli = require('./')({ child_process: { exec: spy }})
-  })
-
   it("throws errors if the file doesn't exist", function(){
+    var spy   = sinon.stub()
+      , cli = require('./')({ child_process: { exec: spy }})
+
     expect(function(args) { cli.play(args) }).withArgs("beep.mp3").
       to.throwException(/File doesn't exist: beep.mp3/)
   })
@@ -58,24 +46,21 @@ describe('error handling', function(){
   it("throws errors if suitable audio tool couldn't be found", function(){
     mock({'./beep.mp3': ''})
 
-    spy.callsArgWith(1, "command not found")
+    var cli = require('./')({ player: null })
 
     expect(function (args) { cli.play(args) }).withArgs("beep.mp3").
       to.throwException(/Couldn't find a suitable audio player/)
+    mock.restore()
   })
 
   it("emits errors", function(){
     var spy = sinon.stub()
-      , cli = require('./')({ child_process: {exec: sinon.spy()}})
+      , cli = require('./')()
+
     cli.on("error", spy)
 
     cli.play("beep.mp3")
-
     expect(spy.calledOnce).to.be(true)
-  })
-
-  afterEach(function(){
-    mock.restore()
   })
 })
 

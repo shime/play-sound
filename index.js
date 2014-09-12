@@ -1,10 +1,11 @@
 var fs               = require('fs')
   , util             = require('util')
   , EventEmitter     = require('events').EventEmitter
-  , defaultPlayers   = [
-                        'cvlc',
-                        'afplay',
+  , findExec         = require('find-exec')
+  , child_process    = require('child_process')
+  , players          = [
                         'mplayer',
+                        'afplay',
                         'mpg123',
                         'mpg321',
                         'play'
@@ -13,9 +14,9 @@ var fs               = require('fs')
 function Play(opts){
   var opts           = opts || {}
 
-  this.players       = opts.players || defaultPlayers
+  this.players       = opts.players || players
   this.child_process = opts.child_process || child_process
-  this.player        = opts.player
+  this.player        = opts.player || findExec(this.players)
 
   var exec           = this.child_process.exec
 
@@ -23,23 +24,16 @@ function Play(opts){
     if (!what) return;
     if (!fs.existsSync(what)) this.emit('error', new Error("File doesn't exist: " + what))
 
-    var players = this.players,
-        self    = this
+    var self = this
 
-    for(i = 0; i < players.length; i++){
-      var player         = self.player || players[i]
-
-      exec(player + ' ' + what, function(err, stdout, stderr){
-        if (err && i == (players.length - 1))
-          self.emit("error", new Error("Couldn't find a suitable audio player"))
-
-        if (!err){
-          self.player = player
-        }
-      })
-
-      if (self.player) break
+    if (!this.player){
+      this.emit("error", new Error("Couldn't find a suitable audio player"))
+      return
     }
+
+    exec(this.player + ' ' + what, function(err, stdout, stderr){
+      if (err) self.emit("error", err)
+    })
   }
 }
 
