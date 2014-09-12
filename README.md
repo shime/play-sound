@@ -1,5 +1,7 @@
 # play-sound
 
+[![Build Status](https://travis-ci.org/shime/play-sound.svg)](https://travis-ci.org/shime/play-sound)
+
 Play sounds by shelling out to one of the available audio players.
 
 ## installation
