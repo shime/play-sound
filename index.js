@@ -11,14 +11,15 @@ var fs               = require('fs')
                         'play'
                        ]
 
+util.inherits(Play, EventEmitter)
+
 function Play(opts){
-  var opts           = opts || {}
+  var opts           = opts               || {}
 
-  this.players       = opts.players || players
-  this.child_process = opts.child_process || child_process
-  this.player        = opts.player || findExec(this.players)
+  this.players       = opts.players       || players
+  this.player        = opts.player        || findExec(this.players)
 
-  var exec           = this.child_process.exec
+  var exec           = child_process.exec
 
   this.play = function(what){
     if (!what) return;
@@ -36,8 +37,6 @@ function Play(opts){
     })
   }
 }
-
-util.inherits(Play, EventEmitter)
 
 module.exports = function(opts){
   return new Play(opts)
