@@ -1,7 +1,7 @@
 var expect     = require('expect.js')
   , sinon      = require('sinon')
   , mock       = require('mock-fs')
-  , proxyquire = require('proxyquire')
+  , proxyquire = require('proxyquire').noPreserveCache()
 
 describe('mplayer has the maximum priority', function(){
   var command, spy, cli
@@ -36,32 +36,25 @@ describe('mplayer has the maximum priority', function(){
 })
 
 describe('error handling', function(){
-  it("throws errors if the file doesn't exist", function(){
-    var spy   = sinon.stub()
-      , cli = require('./')()
+  it("throws errors if the file doesn't exist", function(done){
+    var player = require('./')()
 
-    expect(function(args) { cli.play(args) }).withArgs("beep.mp3").
-      to.throwException(/File doesn't exist: beep.mp3/)
+    player.play('beep.mp3', function(err){
+      expect(err.message).to.be("File doesn't exist: beep.mp3")
+      done()
+    })
   })
 
-  it("throws errors if suitable audio tool couldn't be found", function(){
+  it("throws errors if suitable audio tool couldn't be found", function(done){
     mock({'./beep.mp3': ''})
 
     var cli = require('./')({ player: null })
 
-    expect(function (args) { cli.play(args) }).withArgs("beep.mp3").
-      to.throwException(/Couldn't find a suitable audio player/)
-    mock.restore()
-  })
-
-  it("emits errors", function(){
-    var spy = sinon.stub()
-      , cli = require('./')()
-
-    cli.on("error", spy)
-
-    cli.play("beep.mp3")
-    expect(spy.calledOnce).to.be(true)
+    cli.play("beep.mp3", function(err){
+      expect(err.message).to.be("Couldn't find a suitable audio player")
+      mock.restore()
+      done()
+    })
   })
 })
 
