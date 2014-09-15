@@ -11,7 +11,12 @@ describe('mplayer has the maximum priority', function(){
     , spy   = sinon.stub()
     , cli   = proxyquire('./', { child_process: { exec: spy }})()
 
-    mock({'./beep.mp3': ''})
+    mock({
+      './beep.mp3': '',
+      'mplayer': mock.file({
+        mode: 0755
+      })
+    })
   })
 
   it('tries to play with mplayer first', function(){
@@ -30,14 +35,15 @@ describe('mplayer has the maximum priority', function(){
     expect(spy.called).to.not.be(true)
   })
 
-  afterEach(function(){
-    mock.restore()
-  })
+  afterEach(mock.restore)
 })
 
 describe('error handling', function(){
   it("throws errors if the file doesn't exist", function(done){
-    var player = require('./')()
+    var spy    = sinon.stub(),
+        player = proxyquire('./', { child_process: {exec: spy}})({ player: 'mplayer'})
+
+    spy.callsArgWith(1, undefined, undefined, "file doesn't exist")
 
     player.play('beep.mp3', function(err){
       expect(err.message).to.be("File doesn't exist: beep.mp3")
@@ -46,16 +52,15 @@ describe('error handling', function(){
   })
 
   it("throws errors if suitable audio tool couldn't be found", function(done){
-    mock({'./beep.mp3': ''})
-
-    var cli = require('./')({ player: null })
+    var cli = require('./')({ players: [] })
 
     cli.play("beep.mp3", function(err){
       expect(err.message).to.be("Couldn't find a suitable audio player")
-      mock.restore()
       done()
     })
   })
+
+  afterEach(mock.restore)
 })
 
 describe("overridable options", function(){
