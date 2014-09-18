@@ -33,6 +33,8 @@ function Play(opts){
       if (stderr) next(new Error("File doesn't exist: " + what))
     })
   }
+
+  this.test = function(next) { this.play('./assets/test.mp3', next) }
 }
 
 module.exports = function(opts){

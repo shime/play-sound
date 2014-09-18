@@ -84,4 +84,13 @@ describe("overridable options", function(){
     expect(spy.calledOnce).to.be(true)
     expect(spy.calledWith("foo beep.mp3")).to.be(true)
   })
+
 })
+
+it("provides a function for easy testing", function(done){
+  var player = require('./')()
+  player.test(function(){
+    done()
+  })
+})
+
