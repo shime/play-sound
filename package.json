@@ -29,6 +29,6 @@
     "sinon": "^1.10.3"
   },
   "dependencies": {
-    "find-exec": "0.0.7"
+    "find-exec": "0.0.8"
   }
 }
