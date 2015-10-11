@@ -12,14 +12,7 @@ Play sounds by shelling out to one of the available audio players.
 
 ```javascript
 var player = require('play-sound')(opts = {})
-player.play('foo.mp3') // $ mplayer foo.mp3 
-```
-Using the optional callback;
-```javascript
-var player = require('play-sound')(opts = {})
-player.play('foo.mp3', function(){
-	// Callback functionality here
-})
+player.play('foo.mp3', function(err){}) // $ mplayer foo.mp3 
 ```
 
 Options: 
