@@ -1,6 +1,6 @@
 {
   "name": "play-sound",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Play audio files by shelling out to available audio tool.",
   "main": "index.js",
   "scripts": {
