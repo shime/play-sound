@@ -29,8 +29,9 @@ function Play(opts){
     }
 
     exec(this.player + ' ' + what, function(err, stdout, stderr){
-      if (err) next(err)
-      if (stderr) next(new Error("File doesn't exist: " + what))
+      if (err) return next(err)
+      if (stderr) return next(new Error("File doesn't exist: " + what))
+      return next();
     })
   }
 
