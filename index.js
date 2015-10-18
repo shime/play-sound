@@ -10,7 +10,7 @@ var fs               = require('fs')
                        ]
 
 function Play(opts){
-  var opts           = opts               || {}
+  opts               = opts               || {}
 
   this.players       = opts.players       || players
   this.player        = opts.player        || findExec(this.players)
@@ -18,7 +18,7 @@ function Play(opts){
   var exec           = child_process.exec
 
   this.play = function(what, next){
-    var next = next || function(){}
+    next = next || function(){}
 
     if (!what) return next(new Error("No audio file specified"));
 
