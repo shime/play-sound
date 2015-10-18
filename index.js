@@ -15,8 +15,6 @@ function Play(opts){
   this.players       = opts.players       || players
   this.player        = opts.player        || findExec(this.players)
 
-  var exec           = child_process.exec
-
   this.play = function(what, next){
     next = next || function(){}
 
@@ -34,7 +32,7 @@ function Play(opts){
       return next(new Error("Couldn't find a suitable audio player"))
     }
 
-    exec(this.player + ' ' + what, function(err, stdout, stderr){
+    child_process.execFile(this.player, [what], function(err, stdout, stderr){
       next(err);
     })
   }
