@@ -22,7 +22,7 @@ function Play(opts){
     var self = this,
         next = next || function(){}
 
-    if (!what) return next();
+    if (!what) return next(new Error("No audio file specified"));
 
     if (!this.player){
       return next(new Error("Couldn't find a suitable audio player"))
