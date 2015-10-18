@@ -53,6 +53,7 @@ describe('error handling', function(){
   it("throws errors if suitable audio tool couldn't be found", function(done){
     var cli = require('./')({ players: [] })
 
+    mock({"beep.mp3": ""})
     cli.play("beep.mp3", function(err){
       expect(err.message).to.be("Couldn't find a suitable audio player")
       done()
