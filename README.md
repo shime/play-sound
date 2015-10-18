@@ -15,10 +15,15 @@ var player = require('play-sound')(opts = {})
 player.play('foo.mp3', function(err){}) // $ mplayer foo.mp3 
 ```
 
-Options: 
+## options
 
-* `players` - list of available audio players to check (default: `['mplayer', 'afplay', 'mpg123', 'mpg321', 'play']`)
-* `player`  - audio player to use, skips availability checks
+* `players` – List of available audio players to check. Default:
+  * [`mplayer`](https://www.mplayerhq.hu/)
+  * [`afplay`](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/afplay.1.html)
+  * [`mpg123`](http://www.mpg123.de/)
+  * [`mpg321`](http://mpg321.sourceforge.net/)
+  * [`play`](http://sox.sourceforge.net/)
+* `player` – Audio player to use (skips availability checks)
 
 ## prior art
 
