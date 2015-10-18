@@ -4,12 +4,11 @@ var expect     = require('expect.js')
   , proxyquire = require('proxyquire').noPreserveCache()
 
 describe('mplayer has the maximum priority', function(){
-  var command, spy, cli
+  var spy, cli
 
   beforeEach(function(){
-    command = "mplayer beep.mp3"
-    , spy   = sinon.stub()
-    , cli   = proxyquire('./', { child_process: { execFile: spy }})()
+    spy = sinon.stub()
+    cli = proxyquire('./', { child_process: { execFile: spy }})()
 
     mock({
       './beep.mp3': '',
@@ -25,7 +24,7 @@ describe('mplayer has the maximum priority', function(){
     cli.play("beep.mp3")
 
     expect(spy.calledOnce).to.be(true)
-    expect(spy.calledWith(command)).to.be(true)
+    expect(spy.calledWith("mplayer", ["beep.mp3"])).to.be(true)
     expect(cli.player).to.be('mplayer')
   })
 
@@ -82,7 +81,7 @@ describe("overridable options", function(){
     cli.play("beep.mp3")
 
     expect(spy.calledOnce).to.be(true)
-    expect(spy.calledWith("foo beep.mp3")).to.be(true)
+    expect(spy.calledWith("foo", ["beep.mp3"])).to.be(true)
   })
 
 })
