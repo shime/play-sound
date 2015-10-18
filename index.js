@@ -24,13 +24,20 @@ function Play(opts){
 
     if (!what) return next(new Error("No audio file specified"));
 
+    try {
+      if (!fs.statSync(what).isFile()){
+        return next(new Error(what + " is not a file"));
+      }
+    } catch (err){
+      return next(new Error("File doesn't exist: " + what));
+    }
+
     if (!this.player){
       return next(new Error("Couldn't find a suitable audio player"))
     }
 
     exec(this.player + ' ' + what, function(err, stdout, stderr){
       if (err) return next(err)
-      if (stderr) return next(new Error("File doesn't exist: " + what))
       return next();
     })
   }
