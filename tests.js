@@ -19,8 +19,6 @@ describe('mplayer has the maximum priority', function(){
   })
 
   it('tries to play with mplayer first', function(){
-    spy.callsArg(1)
-
     cli.play("beep.mp3")
 
     expect(spy.calledOnce).to.be(true)
