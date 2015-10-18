@@ -35,7 +35,7 @@ function Play(opts){
     }
 
     exec(this.player + ' ' + what, function(err, stdout, stderr){
-      return next(err);
+      next(err);
     })
   }
 
