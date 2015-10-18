@@ -9,7 +9,7 @@ describe('mplayer has the maximum priority', function(){
   beforeEach(function(){
     command = "mplayer beep.mp3"
     , spy   = sinon.stub()
-    , cli   = proxyquire('./', { child_process: { exec: spy }})()
+    , cli   = proxyquire('./', { child_process: { execFile: spy }})()
 
     mock({
       './beep.mp3': '',
@@ -41,7 +41,7 @@ describe('mplayer has the maximum priority', function(){
 describe('error handling', function(){
   it("throws errors if the file doesn't exist", function(done){
     var spy    = sinon.stub(),
-        player = proxyquire('./', { child_process: {exec: spy}})({ player: 'mplayer'})
+        player = proxyquire('./', { child_process: {execFile: spy}})({ player: 'mplayer'})
 
     spy.callsArgWith(1, undefined, undefined, "file doesn't exist")
 
@@ -76,7 +76,7 @@ describe("overridable options", function(){
 
   it("player has precedence over players", function(){
     var spy = sinon.stub()
-      , cli = proxyquire('./', { child_process: { exec: spy }})({player: "foo"})
+      , cli = proxyquire('./', { child_process: { execFile: spy }})({player: "foo"})
     mock({"beep.mp3": ""})
 
     cli.play("beep.mp3")
