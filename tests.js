@@ -4,12 +4,11 @@ var expect     = require('expect.js')
   , proxyquire = require('proxyquire').noPreserveCache()
 
 describe('mplayer has the maximum priority', function(){
-  var command, spy, cli
+  var spy, cli
 
   beforeEach(function(){
-    command = "mplayer beep.mp3"
-    , spy   = sinon.stub()
-    , cli   = proxyquire('./', { child_process: { exec: spy }})()
+    spy = sinon.stub()
+    cli = proxyquire('./', { child_process: { execFile: spy }})()
 
     mock({
       './beep.mp3': '',
@@ -20,12 +19,10 @@ describe('mplayer has the maximum priority', function(){
   })
 
   it('tries to play with mplayer first', function(){
-    spy.callsArg(1)
-
     cli.play("beep.mp3")
 
     expect(spy.calledOnce).to.be(true)
-    expect(spy.calledWith(command)).to.be(true)
+    expect(spy.calledWith("mplayer", ["beep.mp3"])).to.be(true)
     expect(cli.player).to.be('mplayer')
   })
 
@@ -41,7 +38,7 @@ describe('mplayer has the maximum priority', function(){
 describe('error handling', function(){
   it("throws errors if the file doesn't exist", function(done){
     var spy    = sinon.stub(),
-        player = proxyquire('./', { child_process: {exec: spy}})({ player: 'mplayer'})
+        player = proxyquire('./', { child_process: {execFile: spy}})({ player: 'mplayer'})
 
     spy.callsArgWith(1, undefined, undefined, "file doesn't exist")
 
@@ -54,6 +51,7 @@ describe('error handling', function(){
   it("throws errors if suitable audio tool couldn't be found", function(done){
     var cli = require('./')({ players: [] })
 
+    mock({"beep.mp3": ""})
     cli.play("beep.mp3", function(err){
       expect(err.message).to.be("Couldn't find a suitable audio player")
       done()
@@ -76,13 +74,13 @@ describe("overridable options", function(){
 
   it("player has precedence over players", function(){
     var spy = sinon.stub()
-      , cli = proxyquire('./', { child_process: { exec: spy }})({player: "foo"})
+      , cli = proxyquire('./', { child_process: { execFile: spy }})({player: "foo"})
     mock({"beep.mp3": ""})
 
     cli.play("beep.mp3")
 
     expect(spy.calledOnce).to.be(true)
-    expect(spy.calledWith("foo beep.mp3")).to.be(true)
+    expect(spy.calledWith("foo", ["beep.mp3"])).to.be(true)
   })
 
 })
