@@ -46,6 +46,7 @@ describe('error handling', function(){
       expect(err.message).to.be("beep.mp3 is not a file or URL")
       done()
     })
+  })
 
   it("throws errors if suitable audio tool couldn't be found", function(done){
     var cli = require('./')({ players: [] })
