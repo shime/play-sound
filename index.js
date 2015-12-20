@@ -14,18 +14,23 @@ function Play(opts){
 
   this.players       = opts.players       || players
   this.player        = opts.player        || findExec(this.players)
+  this.urlRegex      = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/i
+  // Regex by @stephenhay from https://mathiasbynens.be/demo/url-regex
 
   this.play = function(what, next){
-    next = next || function(){}
+    next  = next || function(){}
+    isURL = this.player == 'mplayer' && this.urlRegex.test(what)
+
+    try {
+      isFile = fs.statSync(what).isFile()
+    } catch (err){
+      isFile = false
+    }
 
     if (!what) return next(new Error("No audio file specified"));
 
-    try {
-      if (!fs.statSync(what).isFile()){
-        return next(new Error(what + " is not a file"));
-      }
-    } catch (err){
-      return next(new Error("File doesn't exist: " + what));
+    if (!isURL && !isFile){
+      return next(new Error(what + " is not a file or URL"))
     }
 
     if (!this.player){
