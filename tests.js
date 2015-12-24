@@ -43,7 +43,7 @@ describe('error handling', function(){
     spy.callsArgWith(1, undefined, undefined, "file doesn't exist")
 
     player.play('beep.mp3', function(err){
-      expect(err.message).to.be("File doesn't exist: beep.mp3")
+      expect(err.message).to.be("beep.mp3 is not a file or URL")
       done()
     })
   })
