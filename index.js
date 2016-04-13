@@ -6,7 +6,8 @@ var fs               = require('fs')
                         'afplay',
                         'mpg123',
                         'mpg321',
-                        'play'
+                        'play',
+                        'omxplayer'
                        ]
 
 function Play(opts){
