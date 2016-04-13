@@ -23,6 +23,7 @@ player.play('foo.mp3', function(err){}) // $ mplayer foo.mp3
   * [`mpg123`](http://www.mpg123.de/)
   * [`mpg321`](http://mpg321.sourceforge.net/)
   * [`play`](http://sox.sourceforge.net/)
+  * [`omxplayer`](https://github.com/popcornmix/omxplayer)
 * `player` – Audio player to use (skips availability checks)
 
 ## prior art
