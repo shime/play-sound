@@ -20,7 +20,7 @@ function Play(opts){
 
   this.play = function(what, next){
     next  = next || function(){}
-    isURL = this.player == 'mplayer' && this.urlRegex.test(what)
+    var isURL = this.player == 'mplayer' && this.urlRegex.test(what)
 
     try {
       isFile = fs.statSync(what).isFile()
