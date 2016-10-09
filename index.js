@@ -18,7 +18,7 @@ function Play(opts){
   this.urlRegex      = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/i
   // Regex by @stephenhay from https://mathiasbynens.be/demo/url-regex
 
-  this.play = function(what, next){
+  this.play = function(what, next, maxDuration){
     next  = next || function(){}
     var isURL = this.player == 'mplayer' && this.urlRegex.test(what)
 
@@ -38,8 +38,8 @@ function Play(opts){
       return next(new Error("Couldn't find a suitable audio player"))
     }
 
-    child_process.execFile(this.player, [what], function(err, stdout, stderr){
-      next(err);
+    child_process.execFile(this.player, [what], { timeout: maxDuration }, function(err, stdout, stderr){
+      next(err && !err.killed ? err : undefined);
     })
   }
 
