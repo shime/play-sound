@@ -12,7 +12,13 @@ Play sounds by shelling out to one of the available audio players.
 
 ```javascript
 var player = require('play-sound')(opts = {})
-player.play('foo.mp3', function(err){}) // $ mplayer foo.mp3 
+player.play('foo.mp3', function(err){
+  if (err) throw err
+}) // $ mplayer foo.mp3 
+
+player.play('foo.mp3', { timeout: 300 }, function(err){  // opts will be passed to child process
+  if (err) throw err
+})
 ```
 
 ## options

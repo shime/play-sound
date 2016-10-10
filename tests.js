@@ -36,18 +36,6 @@ describe('mplayer has the maximum priority', function(){
 })
 
 describe('error handling', function(){
-  it("throws errors if the file doesn't exist", function(done){
-    var spy    = sinon.stub(),
-        player = proxyquire('./', { child_process: {execFile: spy}})({ player: 'mplayer'})
-
-    spy.callsArgWith(1, undefined, undefined, "file doesn't exist")
-
-    player.play('beep.mp3', function(err){
-      expect(err.message).to.be("beep.mp3 is not a file or URL")
-      done()
-    })
-  })
-
   it("throws errors if suitable audio tool couldn't be found", function(done){
     var cli = require('./')({ players: [] })
 
