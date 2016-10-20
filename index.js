@@ -7,7 +7,8 @@ var fs               = require('fs')
                         'mpg123',
                         'mpg321',
                         'play',
-                        'omxplayer'
+                        'omxplayer',
+                        'cmdmp3'
                        ]
 
 function Play(opts){
