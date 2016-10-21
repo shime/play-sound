@@ -30,7 +30,8 @@ function Play(opts){
       return next(new Error("Couldn't find a suitable audio player"))
     }
 
-    child_process.execFile(this.player, [what], options, function(err, stdout, stderr){
+    var args = Array.isArray(options[this.player]) ? options[this.player].concat(what) : [what]
+    return child_process.execFile(this.player, args, options, function(err, stdout, stderr){
       next(err && !err.killed ? err : undefined);
     })
   }
