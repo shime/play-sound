@@ -6,6 +6,7 @@
   "scripts": {
     "test": "export PATH=$PATH:./shims && node_modules/.bin/mocha tests.js"
   },
+  "files": ["index.js"],
   "repository": {
     "type": "git",
     "url": "git://github.com/shime/play-sound.git"
