@@ -12,11 +12,14 @@ Play sounds by shelling out to one of the available audio players.
 
 ```javascript
 var player = require('play-sound')(opts = {})
+
+// $ mplayer foo.mp3 
 player.play('foo.mp3', function(err){
   if (err) throw err
-}) // $ mplayer foo.mp3 
+})
 
-player.play('foo.mp3', { timeout: 300 }, function(err){  // opts will be passed to child process
+// { timeout: 300 } will be passed to child process
+player.play('foo.mp3', { timeout: 300 }, function(err){
   if (err) throw err
 })
 
@@ -29,7 +32,6 @@ player.play('foo.mp3', { afplay: ['-v', 1 ] /* lower volume for afplay on OSX */
 var audio = player.play('foo.mp3', function(err){
   if (err && !err.killed) throw err
 })
-// ...
 audio.kill()
 ```
 
@@ -42,6 +44,7 @@ audio.kill()
   * [`mpg321`](http://mpg321.sourceforge.net/)
   * [`play`](http://sox.sourceforge.net/)
   * [`omxplayer`](https://github.com/popcornmix/omxplayer)
+  * [`aplay`](https://linux.die.net/man/1/aplay)
 * `player` – Audio player to use (skips availability checks)
 
 ## prior art

@@ -8,6 +8,7 @@ var fs               = require('fs')
                         'mpg321',
                         'play',
                         'omxplayer',
+                        'aplay',
                         'cmdmp3'
                        ]
 
