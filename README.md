@@ -4,11 +4,11 @@
 
 Play sounds by shelling out to one of the available audio players.
 
-## installation
+## Installation
 
     npm install play-sound
 
-## examples
+## Examples
 
 ```javascript
 var player = require('play-sound')(opts = {})
@@ -35,7 +35,7 @@ var audio = player.play('foo.mp3', function(err){
 audio.kill()
 ```
 
-## options
+## Options
 
 * `players` – List of available audio players to check. Default:
   * [`mplayer`](https://www.mplayerhq.hu/)
@@ -47,11 +47,10 @@ audio.kill()
   * [`aplay`](https://linux.die.net/man/1/aplay)
 * `player` – Audio player to use (skips availability checks)
 
-## prior art
+## Prior art
 
-[play.js](https://github.com/Marak/play.js) - play sound files from node.js to your speakers
+* [play.js](https://github.com/Marak/play.js) - play sound files from node.js to your speakers
 
-## license
+## License
 
 MIT
-
