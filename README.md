@@ -27,7 +27,7 @@ player.play('foo.mp3', { afplay: ['-v', 1 ] /* lower volume for afplay on OSX */
 
 // access the node child_process in case you need to kill it on demand
 var audio = player.play('foo.mp3', function(err){
-  if (err) throw err
+  if (err && !err.killed) throw err
 })
 // ...
 audio.kill()
