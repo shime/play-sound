@@ -71,6 +71,28 @@ describe("overridable options", function(){
     expect(spy.calledWith("foo", ["beep.mp3"])).to.be(true)
   })
 
+  it("takes player arguments", function(){
+    var spy = sinon.stub()
+      , cli = proxyquire('./', { child_process: { execFile: spy }})({player: "afplay"})
+    mock({"beep.mp3": ""})
+
+    cli.play("beep.mp3", { afplay: ["-v", 2] })
+
+    expect(spy.calledOnce).to.be(true)
+    expect(spy.calledWith("afplay", ["-v", 2, "beep.mp3"])).to.be(true)
+  })
+
+  it("returns the child_process instance", function(){
+    var returnInstance = {}
+      , spy = sinon.stub().returns(returnInstance)
+      , cli = proxyquire('./', { child_process: { execFile: spy }})({player: "foo"})
+    mock({"beep.mp3": ""})
+
+    var response = cli.play("beep.mp3")
+
+    expect(response).to.equal(returnInstance)
+  })
+
 })
 
 if (!process.env.CI){
