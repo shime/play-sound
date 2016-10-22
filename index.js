@@ -22,6 +22,8 @@ function Play(opts){
   this.play = function(what, options, next){
     next  = next || function(){}
     next  = typeof(options) === 'function' ? options : next
+    options = options || {}
+
     var isURL = this.player == 'mplayer' && this.urlRegex.test(what)
 
     if (!what) return next(new Error("No audio file specified"));
