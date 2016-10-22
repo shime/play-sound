@@ -1,12 +1,14 @@
 {
   "name": "play-sound",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Play audio files by shelling out to available audio tool.",
   "main": "index.js",
   "scripts": {
     "test": "export PATH=$PATH:./shims && node_modules/.bin/mocha tests.js"
   },
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/shime/play-sound.git"
