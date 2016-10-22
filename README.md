@@ -45,6 +45,7 @@ audio.kill()
   * [`play`](http://sox.sourceforge.net/)
   * [`omxplayer`](https://github.com/popcornmix/omxplayer)
   * [`aplay`](https://linux.die.net/man/1/aplay)
+  * [`cmdmp3`](https://github.com/jimlawless/cmdmp3)
 * `player` – Audio player to use (skips availability checks)
 
 ## Prior art
