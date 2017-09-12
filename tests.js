@@ -8,7 +8,7 @@ describe('mplayer has the maximum priority', function(){
 
   beforeEach(function(){
     spy = sinon.stub()
-    cli = proxyquire('./', { child_process: { execFile: spy }})()
+    cli = proxyquire('./', { child_process: { spawn: spy }})()
 
     mock({
       './beep.mp3': '',
@@ -62,7 +62,7 @@ describe("overridable options", function(){
 
   it("player has precedence over players", function(){
     var spy = sinon.stub()
-      , cli = proxyquire('./', { child_process: { execFile: spy }})({player: "foo"})
+      , cli = proxyquire('./', { child_process: { spawn: spy }})({player: "foo"})
     mock({"beep.mp3": ""})
 
     cli.play("beep.mp3")
@@ -73,7 +73,7 @@ describe("overridable options", function(){
 
   it("takes player arguments", function(){
     var spy = sinon.stub()
-      , cli = proxyquire('./', { child_process: { execFile: spy }})({player: "afplay"})
+      , cli = proxyquire('./', { child_process: { spawn: spy }})({player: "afplay"})
     mock({"beep.mp3": ""})
 
     cli.play("beep.mp3", { afplay: ["-v", 2] })
@@ -85,7 +85,7 @@ describe("overridable options", function(){
   it("returns the child_process instance", function(){
     var returnInstance = {}
       , spy = sinon.stub().returns(returnInstance)
-      , cli = proxyquire('./', { child_process: { execFile: spy }})({player: "foo"})
+      , cli = proxyquire('./', { child_process: { spawn: spy }})({player: "foo"})
     mock({"beep.mp3": ""})
 
     var response = cli.play("beep.mp3")
