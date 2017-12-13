@@ -83,7 +83,7 @@ describe("overridable options", function(){
   })
 
   it("returns the child_process instance", function(){
-    var returnInstance = {}
+    var returnInstance = {on: function() {}}
       , spy = sinon.stub().returns(returnInstance)
       , cli = proxyquire('./', { child_process: { spawn: spy }})({player: "foo"})
     mock({"beep.mp3": ""})
