@@ -1,6 +1,6 @@
 var fs               = require('fs')
   , findExec         = require('find-exec')
-  , child_process    = require('child_process')
+  , spawn            = require('child_process').spawn
   , players          = [
                         'mplayer',
                         'afplay',
@@ -22,21 +22,26 @@ function Play(opts){
 
   this.play = function(what, options, next){
     next  = next || function(){}
-    next  = typeof(options) === 'function' ? options : next
-    options = options || {}
+    next  = typeof options === 'function' ? options : next
+    options = typeof options === 'object' ? options : {}
+    options.stdio = 'ignore'
 
     var isURL = this.player == 'mplayer' && this.urlRegex.test(what)
 
-    if (!what) return next(new Error("No audio file specified"));
+    if (!what) return next(new Error("No audio file specified"))
 
     if (!this.player){
       return next(new Error("Couldn't find a suitable audio player"))
     }
 
     var args = Array.isArray(options[this.player]) ? options[this.player].concat(what) : [what]
-    return child_process.execFile(this.player, args, options, function(err, stdout, stderr){
-      next(err && !err.killed ? err : undefined);
-    })
+    var process = spawn(this.player, args, options)
+    if (!process) {
+      next(new Error("Unable to spawn process with " + this.player))
+      return null
+    }
+    process.on('close',function(err){ next(err && !err.killed ? err : null) })
+    return process
   }
 
   this.test = function(next) { this.play('./assets/test.mp3', next) }
