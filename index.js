@@ -24,7 +24,6 @@ function Play(opts){
     next  = next || function(){}
     next  = typeof options === 'function' ? options : next
     options = typeof options === 'object' ? options : {}
-    options.stdio = 'ignore'
 
     var isURL = this.player == 'mplayer' && this.urlRegex.test(what)
 
