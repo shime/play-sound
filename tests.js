@@ -93,6 +93,7 @@ describe("overridable options", function(){
     expect(response).to.equal(returnInstance)
   })
 
+  afterEach(mock.restore)
 })
 
 if (!process.env.CI){
