@@ -32,6 +32,6 @@
     "sinon": "^3.2.1"
   },
   "dependencies": {
-    "find-exec": "1.0.0"
+    "find-exec": "1.0.1"
   }
 }
