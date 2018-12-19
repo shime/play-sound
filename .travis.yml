@@ -1,4 +1,10 @@
 language: node_js
 notifications:
   email: false
+node_js:
+  - lts/* # ensure working in latest node_js
+  - '11'
+  - '10'
+  - '8'
+  - '6'
 script: CI=true npm test
