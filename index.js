@@ -4,6 +4,7 @@ var fs               = require('fs')
   , players          = [
                         'mplayer',
                         'afplay',
+                        'ffplay',
                         'mpg123',
                         'mpg321',
                         'play',
@@ -11,6 +12,10 @@ var fs               = require('fs')
                         'aplay',
                         'cmdmp3'
                        ]
+
+var defaultOptions = {
+  ffplay: ['-nodisp', '-autoexit']
+}
 
 function Play(opts){
   opts               = opts               || {}
@@ -23,7 +28,7 @@ function Play(opts){
   this.play = function(what, options, next){
     next  = next || function(){}
     next  = typeof options === 'function' ? options : next
-    options = typeof options === 'object' ? options : {}
+    options = Object.assign(defaultOptions, typeof options === 'object' ? options : {})
     options.stdio = 'ignore'
 
     var isURL = this.player == 'mplayer' && this.urlRegex.test(what)

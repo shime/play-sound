@@ -40,6 +40,7 @@ audio.kill()
 * `players` – List of available audio players to check. Default:
   * [`mplayer`](https://www.mplayerhq.hu/)
   * [`afplay`](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/afplay.1.html)
+  * [`ffplay`](https://ffmpeg.org/ffplay.html)
   * [`mpg123`](http://www.mpg123.de/)
   * [`mpg321`](http://mpg321.sourceforge.net/)
   * [`play`](http://sox.sourceforge.net/)
