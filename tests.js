@@ -7,7 +7,8 @@ describe('mplayer has the maximum priority', function(){
   var spy, cli
 
   beforeEach(function(){
-    spy = sinon.stub()
+    var returnInstance = {on: function() {}}
+    spy = sinon.stub().returns(returnInstance)
     cli = proxyquire('./', { child_process: { spawn: spy }})()
 
     mock({
@@ -61,7 +62,8 @@ describe("overridable options", function(){
   })
 
   it("player has precedence over players", function(){
-    var spy = sinon.stub()
+    var returnInstance = {on: function() {}}
+      , spy = sinon.stub().returns(returnInstance)
       , cli = proxyquire('./', { child_process: { spawn: spy }})({player: "foo"})
     mock({"beep.mp3": ""})
 
@@ -72,7 +74,8 @@ describe("overridable options", function(){
   })
 
   it("takes player arguments", function(){
-    var spy = sinon.stub()
+    var returnInstance = {on: function() {}}
+      , spy = sinon.stub().returns(returnInstance)
       , cli = proxyquire('./', { child_process: { spawn: spy }})({player: "afplay"})
     mock({"beep.mp3": ""})
 

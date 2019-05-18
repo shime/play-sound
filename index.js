@@ -32,25 +32,47 @@ function Play(opts){
     options = Object.assign(defaultOptions, typeof options === 'object' ? options : {})
     options.stdio = 'ignore'
 
-    if (!what) return next(new Error("No audio file specified"))
+    if (!what) {
+      next(new Error("No audio file specified"))
+      return null
+    }
 
     try {
       fs.accessSync(what, fs.constants.R_OK)
     } catch (_) {
-      return next(new Error("Specified file can't be accessed"))
+      next(new Error("Specified file can't be accessed"))
+      return null
     }
 
     if (!this.player || this.urlRegex.test(what) && this.player !== 'mplayer') {
-      return next(new Error("Couldn't find a suitable audio player"))
+      next(new Error("Couldn't find a suitable audio player"))
+      return null
     }
 
     var args = Array.isArray(options[this.player]) ? options[this.player].concat(what) : [what]
+
     var process = spawn(this.player, args, options)
-    if (!process) {
-      next(new Error("Unable to spawn process with " + this.player))
-      return null
-    }
-    process.on('close',function(err){ next(err && !err.killed ? err : null) })
+
+    process.on('error', function(err) {
+      if (!process.playerFinished) {
+        process.playerFinished = true
+        next(err)
+      }
+    })
+
+    var player = this.player
+
+    process.on('exit', function(code, signal) {
+      if (!process.playerFinished) {
+        process.playerFinished = true
+        var err = new Error(player + " exited with " + (code || signal))
+        err.code = code
+        err.signal = signal
+        err.killed = process.killed
+        next(code !== 0 ? err : null, { code: code, signal: signal, killed: process.killed })
+      }
+    })
+
     return process
   }
 
