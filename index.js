@@ -1,4 +1,4 @@
-var fs               = require('fs')
+var path             = require('path')
   , findExec         = require('find-exec')
   , spawn            = require('child_process').spawn
   , players          = [
@@ -47,7 +47,7 @@ function Play(opts){
     return process
   }
 
-  this.test = function(next) { this.play('./assets/test.mp3', next) }
+  this.test = function(next) { this.play(path.join(__dirname, 'assets', 'test.mp3'), next) }
 }
 
 module.exports = function(opts){
