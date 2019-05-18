@@ -1,4 +1,5 @@
-var path             = require('path')
+var fs               = require('fs')
+  , path             = require('path')
   , findExec         = require('find-exec')
   , spawn            = require('child_process').spawn
   , players          = [
@@ -32,6 +33,12 @@ function Play(opts){
     options.stdio = 'ignore'
 
     if (!what) return next(new Error("No audio file specified"))
+
+    try {
+      fs.accessSync(what, fs.constants.R_OK)
+    } catch (_) {
+      return next(new Error("Specified file can't be accessed"))
+    }
 
     if (!this.player || this.urlRegex.test(what) && this.player !== 'mplayer') {
       return next(new Error("Couldn't find a suitable audio player"))
