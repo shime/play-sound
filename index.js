@@ -50,3 +50,20 @@ function Play(opts){
 module.exports = function(opts){
   return new Play(opts)
 }
+
+module.exports.play = function(what, options, next) {
+  if (!next && typeof options !== 'function') {
+    var player = new Play(options)
+    return new Promise(function(resolve, reject) {
+      player.play(what, options, function(err, data) {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(data)
+        }
+      })
+    })
+  } else {
+    return new Play(typeof options === 'object' ? options : {}).play(what, options, next)
+  }
+}

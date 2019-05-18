@@ -10,6 +10,8 @@ Play sounds by shelling out to one of the available audio players.
 
 ## Examples
 
+Using a player object:
+
 ```javascript
 var player = require('play-sound')(opts = {})
 
@@ -33,6 +35,20 @@ var audio = player.play('foo.mp3', function(err){
   if (err && !err.killed) throw err
 })
 audio.kill()
+```
+
+Or using a function:
+
+```javascript
+const { play } = require('play-sound')
+
+// await in async function
+await play('foo.mp3')
+
+// or use a callback
+const process = play('foo.mp3', err => {
+  if (err) throw err
+})
 ```
 
 ## Options
