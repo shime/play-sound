@@ -31,11 +31,9 @@ function Play(opts){
     options = Object.assign(defaultOptions, typeof options === 'object' ? options : {})
     options.stdio = 'ignore'
 
-    var isURL = this.player == 'mplayer' && this.urlRegex.test(what)
-
     if (!what) return next(new Error("No audio file specified"))
 
-    if (!this.player){
+    if (!this.player || this.urlRegex.test(what) && this.player !== 'mplayer') {
       return next(new Error("Couldn't find a suitable audio player"))
     }
 
