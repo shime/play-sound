@@ -34,7 +34,7 @@ function Play(opts){
       return next(new Error("Couldn't find a suitable audio player"))
     }
 
-    var args = Array.isArray(options[this.player]) ? options[this.player].concat(what) : [what]
+    var args = Array.isArray(options[this.player]) ? [what].concat(options[this.player]) : [what]
     var process = spawn(this.player, args, options)
     if (!process) {
       next(new Error("Unable to spawn process with " + this.player))
