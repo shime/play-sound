@@ -1,6 +1,6 @@
 # play-sound
 
-[![Build Status](https://travis-ci.org/shime/play-sound.svg)](https://travis-ci.org/shime/play-sound) [![Downloads](https://img.shields.io/npm/dt/play-sound.svg)](https://npmjs.org/package/play-sound)
+[![Downloads](https://img.shields.io/npm/dt/play-sound.svg)](https://npmjs.org/package/play-sound)
 
 Play sounds by shelling out to one of the available audio players.
 
