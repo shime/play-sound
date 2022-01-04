@@ -46,6 +46,8 @@ audio.kill()
   * [`omxplayer`](https://github.com/popcornmix/omxplayer)
   * [`aplay`](https://linux.die.net/man/1/aplay)
   * [`cmdmp3`](https://github.com/jimlawless/cmdmp3)
+  * [`cvlc`](https://www.commandlinux.com/man-page/man1/cvlc.1.html)
+  * [`powershell`](https://docs.microsoft.com/en-us/powershell/)
 * `player` – Audio player to use (skips availability checks)
 
 ## Prior art
