@@ -27,7 +27,7 @@ jobs:
     - run: yarn install
 
     - if: ${{ matrix.os == 'windows-latest' }}
-      run: npm test:windows
+      run: npm run test:windows
 
     - if: ${{ matrix.os != 'windows-latest' }}
       run: npm test
