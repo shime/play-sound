@@ -10,7 +10,8 @@ var fs               = require('fs')
                         'omxplayer',
                         'aplay',
                         'cmdmp3',
-                        'cvlc'
+                        'cvlc',
+                        'powershell'
                        ]
 
 function Play(opts){
