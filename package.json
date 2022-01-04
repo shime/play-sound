@@ -4,7 +4,8 @@
   "description": "Play audio files by shelling out to available audio tool.",
   "main": "index.js",
   "scripts": {
-    "test": "export PATH=$PATH:./shims && node_modules/.bin/mocha tests.js"
+    "test": "export PATH=$PATH:./shims && npx mocha tests.js",
+    "test:windows": "set PATH=%PATH%;.\\shims && npx mocha tests.js"
   },
   "files": [
     "index.js"
