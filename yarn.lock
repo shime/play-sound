@@ -206,10 +206,10 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-find-exec@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/find-exec/-/find-exec-1.0.1.tgz#c7cc26d6eed293f05542796d32d20094672902d1"
-  integrity sha512-4o6QkGkpg3xK5s/47rdK9LDZRsE4JR1mrXnaAOXBngG6UKeIDJXfwtNCAkljgyy6VRh75D3FFaB0tii9vDEtIA==
+find-exec@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/find-exec/-/find-exec-1.0.2.tgz#dd90e77ef50ab380bdb2f6cc508a386606f3d3bd"
+  integrity sha512-/cs763F5i7Nm/aG+hjBv2nJB/Bl2w0tnuZd5bbfcV+WYapn8T4ez3B87H6MgvsmdheDkitj/rHi557wvE+XylQ==
 
 find-up@5.0.0:
   version "5.0.0"
