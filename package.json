@@ -33,6 +33,6 @@
     "sinon": "^7.2.2"
   },
   "dependencies": {
-    "find-exec": "1.0.2"
+    "find-exec": "1.0.3"
   }
 }
